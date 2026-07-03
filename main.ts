@@ -111,6 +111,7 @@ const FUNCTIONS = new Set([
   "hours",
   "if",
   "integer",
+  "intersect",
   "iqr",
   "isoweek",
   "isoyear",

@@ -9,7 +9,7 @@ Obsidian에서 `spotfire` 코드블럭 안의 Spotfire 표현식을 색상으로
 - 컬럼 참조를 녹색으로 표시
 - 문자열 리터럴을 분홍색으로 표시
 - `over`, `as`, `case`, `when`, `then` 같은 Spotfire 키워드를 파란색으로 표시
-- `Avg`, `If`, `Sum`, `DateDiff` 같은 Spotfire 함수를 보라색으로 표시
+- `Avg`, `If`, `Sum`, `DateDiff`, `Intersect` 같은 Spotfire 함수를 보라색으로 표시
 - `as` 뒤에 오는 결과 컬럼 alias를 남색으로 표시
 - 닫히지 않은 컬럼/문자열, 괄호 불일치, `as` 뒤 alias 누락을 물결 밑줄로 표시
 
@@ -36,6 +36,12 @@ Avg(if([column1]='text',10,14)) over ([column2]) as [column3[nm]]]
 ```spotfire
 Avg([column1]) over ([column2]) as
 [column3[nm]]]
+```
+
+`Intersect()`처럼 `OVER` 안에서 쓰는 Spotfire navigation method도 함수 색상으로 표시합니다.
+
+```spotfire
+Avg([Sales]) over Intersect([Cat], AllPrevious([Year]))
 ```
 
 다음과 같은 표현은 lint 표시가 붙습니다.

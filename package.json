@@ -1,6 +1,6 @@
 {
   "name": "obsidian-spotfire-codeblock",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Highlight Spotfire expression code blocks in Obsidian.",
   "main": "main.js",
   "scripts": {
