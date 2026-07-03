@@ -1,0 +1,10 @@
+{
+  "id": "spotfire-codeblock",
+  "name": "Spotfire Codeblock",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "Highlight Spotfire expression code blocks in Obsidian.",
+  "author": "SMOKE-19",
+  "authorUrl": "https://github.com/SMOKE-19",
+  "isDesktopOnly": false
+}
