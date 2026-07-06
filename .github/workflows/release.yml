@@ -1,0 +1,70 @@
+name: Build and Release Obsidian Plugin
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build plugin package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Prepare package
+        run: |
+          version="$(node -p "require('./manifest.json').version")"
+          package_dir="dist/spotfire-codeblock"
+          mkdir -p "$package_dir"
+          cp manifest.json "$package_dir/manifest.json"
+          cp main.js "$package_dir/main.js"
+          cp styles.css "$package_dir/styles.css"
+          if [ -f versions.json ]; then cp versions.json "$package_dir/versions.json"; fi
+          (cd "$package_dir" && zip -r "../spotfire-codeblock-$version.zip" .)
+          cp "$package_dir/manifest.json" dist/manifest.json
+          cp "$package_dir/main.js" dist/main.js
+          cp "$package_dir/styles.css" dist/styles.css
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spotfire-codeblock-plugin
+          path: |
+            dist/spotfire-codeblock
+            dist/*.zip
+            dist/manifest.json
+            dist/main.js
+            dist/styles.css
+          retention-days: 7
+
+      - name: Attach package to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.zip
+            dist/manifest.json
+            dist/main.js
+            dist/styles.css

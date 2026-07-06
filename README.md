@@ -56,6 +56,7 @@ Avg(if([column1]='text',10,14)) over ([column2) as
 - `styles.css`: 읽기 모드와 편집 모드의 토큰 색상
 - `manifest.json`: Obsidian 플러그인 메타데이터
 - `esbuild.config.mjs`: `main.ts`를 `main.js`로 번들링하는 설정
+- `.github/workflows/release.yml`: GitHub Actions에서 플러그인 배포 산출물을 생성하고 태그 Release에 첨부
 - `versions.json`: Obsidian 플러그인 버전 호환 정보
 
 ## 빌드
@@ -72,7 +73,9 @@ npm install
 npm run build
 ```
 
-빌드가 끝나면 Obsidian 플러그인 배포에 필요한 파일은 다음입니다.
+빌드가 끝나면 로컬에 `main.js`가 생성됩니다. 이 파일은 번들 결과물이므로 Git에는 커밋하지 않고, GitHub Actions가 Release 산출물로 생성합니다.
+
+Obsidian 플러그인 배포에 필요한 파일은 다음입니다.
 
 - `manifest.json`
 - `main.js`
@@ -101,6 +104,8 @@ spotfire-codeblock/
 그 다음 Obsidian에서 커뮤니티 플러그인 목록을 새로고침하고 `Spotfire Codeblock`을 활성화합니다.
 
 Release에는 Obsidian 커뮤니티 플러그인 등록 호환을 위해 `manifest.json`, `main.js`, `styles.css` 개별 파일도 함께 올라갈 수 있습니다. 수동 설치할 때는 ZIP 파일을 받는 쪽이 편합니다.
+
+Release는 `v0.1.1`처럼 버전 태그를 push하면 GitHub Actions가 자동으로 생성/첨부합니다.
 
 ## 구현 메모
 
